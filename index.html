@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Annuaire des compagnies</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f9;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #search {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    a {
+      color: blue;
+    }
+  </style>
+
+  <!-- 🔥 LIBRAIRIE QUI RÉPARE TOUT -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+</head>
+<body>
+
+<h1>Annuaire des compagnies</h1>
+
+<input type="text" id="search" placeholder="Rechercher une compagnie ou un produit...">
+
+<div id="list"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
