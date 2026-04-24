@@ -2,51 +2,163 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Annuaire des compagnies</title>
+  <title>Annuaire AS Du Grand Lyon</title>
 
+  <!-- 🔥 STYLE PRO -->
   <style>
     body {
-      font-family: Arial;
-      background: #f4f6f9;
+      font-family: 'Segoe UI', sans-serif;
+      background: #F5F7FA;
+      margin: 0;
+    }
+
+    header {
+      background: #0A2540;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .container {
       padding: 30px;
     }
 
-    h1 {
-      text-align: center;
-    }
-
-    #search {
-      width: 100%;
-      padding: 10px;
+    .controls {
+      display: flex;
+      gap: 15px;
       margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      flex-wrap: wrap;
     }
 
-    .card {
+    input, select {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      width: 250px;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #1E3A5F;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
       background: white;
-      padding: 15px;
-      margin-bottom: 10px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    th {
+      background: #1E3A5F;
+      color: white;
+      padding: 14px;
+      text-align: left;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    tr:hover {
+      background: #f1f5f9;
+      transition: 0.2s;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
     }
 
     a {
-      color: blue;
+      background: #2EA44F;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      display: inline-block;
+    }
+
+    a:hover {
+      background: #248a3d;
+    }
+
+    td:nth-child(2) {
+      line-height: 1.5;
+    }
+
+    /* 🔥 BADGES PRODUITS */
+    .badge {
+      display: inline-block;
+      background: #e3ecf7;
+      color: #0A2540;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin: 2px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 12px;
+      }
+
+      input, select {
+        width: 100%;
+      }
     }
   </style>
 
-  <!-- 🔥 LIBRAIRIE QUI RÉPARE TOUT -->
+  <!-- 🔥 LIBRAIRIE CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 </head>
+
 <body>
 
-<h1>Annuaire des compagnies</h1>
+<header>Annuaire Partenaires - AS Du Grand Lyon</header>
 
-<input type="text" id="search" placeholder="Rechercher une compagnie ou un produit...">
+<div class="container">
 
-<div id="list"></div>
+  <div id="infoBar" style="margin-bottom:10px; font-size:14px;"></div>
+
+<div id="loader" style="display:none;">Chargement...</div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Rechercher une compagnie ou produit...">
+    
+    <select id="filterProduit">
+      <option value="">Tous les produits</option>
+    </select>
+  </div>
+
+  
+
+  <table>
+    <thead>
+  <tr>
+    <th data-col="COMPAGNIES">NOM ⬍</th>
+    <th data-col="PRODUITS">PRODUITS ⬍</th>
+    <th data-col="LIENS">LIEN ⬍</th>
+    <th data-col="CONTACT INSPECTEUR">CONTACT ⬍</th>
+  </tr>
+</thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+</div>
 
 <script src="script.js"></script>
 
