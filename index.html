@@ -91,7 +91,6 @@
       background: #fafafa;
     }
 
-    /* BOUTONS & LIENS */
     .btn-link {
       background: #2EA44F;
       color: white;
@@ -102,22 +101,6 @@
       display: inline-block;
     }
 
-    .btn-edit {
-      background: #6d3a5e;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-      transition: 0.3s;
-    }
-
-    .btn-edit:hover {
-      background: #4a2740;
-    }
-
-    /* BADGES PRODUITS */
     .badge {
       display: inline-block;
       background: #e3ecf7;
@@ -149,7 +132,8 @@
 <body>
 
 <header class="header">
-  <img src="logos/as-logo.png" class="logo-header" alt="Logo">
+  <!-- CORRECTION ICI : Pas de chemin local, juste le nom du fichier -->
+  <img src="/logos/as-logo.png" class="logo-header" alt="Logo">
   <div class="title">Annuaire Partenaires - AS Du Grand Lyon</div>
 </header>
 
@@ -171,7 +155,6 @@
         <th data-col="PRODUITS">PRODUITS ⬍</th>
         <th data-col="LIENS">LIEN ⬍</th>
         <th data-col="CONTACT INSPECTEUR">CONTACT ⬍</th>
-        <th>ACTION</th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
