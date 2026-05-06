@@ -40,9 +40,21 @@ function display(data) {
       ? item["CONTACT INSPECTEUR"].replace(/\n/g, "<br>")
       : "";
 
+    const companyName = item["COMPAGNIES"] || "";
+    const logoFileName = companyName.toLowerCase().trim() + ".png";
+    const logoPath = `logos/${logoFileName}`;
+
     tbody.innerHTML += `
       <tr>
-        <td>${item["COMPAGNIES"] || ""}</td>
+        <td style="display: flex; align-items: center; gap: 20px; padding: 15px 10px;">
+          <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 8px; border: 1px solid #eee; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <img src="${logoPath}" 
+                 alt="" 
+                 style="width: 55px; height: 55px; object-fit: contain;"
+                 onerror="this.parentElement.style.display='none'">
+          </div>
+          <strong style="font-size: 16px; color: #333;">${companyName}</strong>
+        </td>
         <td>${produitsHTML}</td>
         <td><a href="${item["LIENS"]}" target="_blank" class="btn-link">Accéder</a></td>
         <td>${contact}</td>
