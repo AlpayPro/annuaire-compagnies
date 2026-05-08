@@ -6,7 +6,7 @@ let currentSort = { column: null, asc: true };
 const loader = document.getElementById("loader");
 const infoBar = document.getElementById("infoBar");
 
-// Chargement initial
+// 1. Chargement initial des données depuis Google Sheets
 fetch(csvUrl)
   .then(res => res.text())
   .then(csv => {
@@ -22,12 +22,13 @@ fetch(csvUrl)
     loader.style.display = "none";
   });
 
-// Affichage de la table
+// 2. Fonction d'affichage principale (avec logos agrandis et gestion des noms de fichiers)
 function display(data) {
   const tbody = document.getElementById("tableBody");
   tbody.innerHTML = "";
 
   data.forEach((item) => {
+    // Gestion des badges pour les produits
     let produitsHTML = "";
     if (item["PRODUITS"]) {
       produitsHTML = item["PRODUITS"]
@@ -36,21 +37,25 @@ function display(data) {
         .join(" ");
     }
 
+    // Gestion du formatage des contacts
     const contact = item["CONTACT INSPECTEUR"]
       ? item["CONTACT INSPECTEUR"].replace(/\n/g, "<br>")
       : "";
 
+    // --- LOGIQUE DES LOGOS ---
     const companyName = item["COMPAGNIES"] || "";
-    const logoFileName = companyName.toLowerCase().trim() + ".png";
+    
+    // On transforme "ADD VALUE" en "add_value.png" pour correspondre à tes fichiers
+    const logoFileName = companyName.toLowerCase().trim().replace(/\s+/g, '_') + ".png";
     const logoPath = `logos/${logoFileName}`;
 
     tbody.innerHTML += `
       <tr>
         <td style="display: flex; align-items: center; gap: 20px; padding: 15px 10px;">
-          <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 8px; border: 1px solid #eee; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+          <div style="width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 8px; border: 1px solid #eee; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
             <img src="${logoPath}" 
                  alt="" 
-                 style="width: 55px; height: 55px; object-fit: contain;"
+                 style="width: 60px; height: 60px; object-fit: contain;"
                  onerror="this.parentElement.style.display='none'">
           </div>
           <strong style="font-size: 16px; color: #333;">${companyName}</strong>
@@ -65,7 +70,7 @@ function display(data) {
   infoBar.innerText = `${data.length} résultat(s)`;
 }
 
-// Filtres et Recherche
+// 3. Filtres et Recherche
 function filterData() {
   const searchValue = document.getElementById("search").value.toLowerCase();
   const produitValue = document.getElementById("filterProduit").value;
@@ -80,6 +85,7 @@ function filterData() {
     return matchSearch && matchProduit;
   });
 
+  // Gestion du tri
   if (currentSort.column) {
     filtered.sort((a, b) => {
       let valA = a[currentSort.column] || "";
@@ -91,7 +97,7 @@ function filterData() {
   display(filtered);
 }
 
-// Remplir le menu déroulant des produits
+// 4. Initialisation du menu déroulant des produits
 function initFilter() {
   const select = document.getElementById("filterProduit");
   let produitsSet = new Set();
@@ -113,11 +119,11 @@ function initFilter() {
   });
 }
 
-// Écouteurs d'événements
+// 5. Écouteurs d'événements
 document.getElementById("search").addEventListener("input", filterData);
 document.getElementById("filterProduit").addEventListener("change", filterData);
 
-// Gestion du tri
+// 6. Gestion du tri des colonnes
 document.querySelectorAll("th").forEach(th => {
   th.addEventListener("click", () => {
     const col = th.dataset.col;
@@ -134,6 +140,7 @@ document.querySelectorAll("th").forEach(th => {
   });
 });
 
+// 7. Mise à jour visuelle des flèches de tri
 function updateSortUI() {
   document.querySelectorAll("th").forEach(th => {
     if (!th.dataset.col) return;
